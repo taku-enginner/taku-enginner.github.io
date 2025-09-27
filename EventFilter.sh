@@ -37,19 +37,13 @@ do
 
   max_event_number=$(echo $text | grep -oP '(?<=<span class="pagination-text">).*?(?=件中)')
   current_event_number=$(echo "$text" | grep -oP '\d+(?=件を表示中)')
-  echo "max_event_number: $max_event_number"
-  echo "current_event_number: $current_event_number"
   if [ "$max_event_number" -eq "$current_event_number" ]; then
     break
   fi
   page=$((page + 1))
 done
 
-
-
-# フィルタリング配列
 result_array=()
-
 for i in `seq 0 $((${#event_array[@]} - 1 ))`
 do
   match_flg=0
