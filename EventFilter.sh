@@ -11,14 +11,14 @@ date_time_array=()
 
 while true
 do
-  text=$(curl "$BASE_URL$page")
+  get_page_text=$(curl "$BASE_URL$page")
 
   # イベント名を抜き出す
   # -P オプションは非貪欲マッチングという最短マッチのオプション
   # (?<=...)は肯定後読み、(?=...)は肯定後読み（マッチ結果に含まれない）
-  events=$(echo $text | grep -oP '(?<=<h2 class="runteq-event-title">).*?(?=</h2>)')
-  event_links=$(echo $text | grep -oP '(?<=<a class="runteq-event-item-link" href=").*?(?=">)' | uniq)
-  date_times=$(echo $text | grep -oP '(?<=<i class="far fa-clock"></i>).*?(?=</div>)')
+  events=$(echo $get_page_text | grep -oP '(?<=<h2 class="runteq-event-title">).*?(?=</h2>)')
+  event_links=$(echo $get_page_text | grep -oP '(?<=<a class="runteq-event-item-link" href=").*?(?=">)' | uniq)
+  date_times=$(echo $get_page_text | grep -oP '(?<=<i class="far fa-clock"></i>).*?(?=</div>)')
 
   # 配列に置換するために半角スペースをすべて消す。グローバル置換の//。/gはsedなどの外部コマンドで使われるが、bashのパラメータ展開では使わない。
   events=${events// /}
